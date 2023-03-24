@@ -1,5 +1,7 @@
 # seedwing-tekton-example
 
+*WIP*
+
 Example of using Seedwing Policy in a Tekton pipeline.
 
 ## prerequisites
@@ -70,4 +72,10 @@ podman login $REGISTRY -u $REGISTRY_USER --authfile config.json
 kubectl create secret generic registry-credentials --type=kubernetes.io/dockerconfigjson --from-file=.dockerconfigjson=config.json --from-file=config.json
 kubectl create -f tasks
 kubectl create -f pipelines
+```
+
+### Running a build
+
+``` 4d
+kubectl create -f quarkus-pipeline-run.yaml
 ```
