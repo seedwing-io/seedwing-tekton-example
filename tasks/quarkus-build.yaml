@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: quarkus-build
+spec:
+  description: >-
+    This Task builds a quarkus application
+  params:
+  - name: PROJECT_PATH
+    description: The project within the repository
+  - name: BUILDER_IMAGE
+    description: The image on which builds will run
+  workspaces:
+  - name: build
+  steps:
+  - name: build
+    workingDir: $(workspaces.build.path)/$(params.PROJECT_PATH)
+    image: $(params.BUILDER_IMAGE)
+    command: ["/bin/bash"]
+    args: ["-c", "cd $(workspaces.build.path); mvn package"]
+    securityContext:
+      runAsUser: 0
