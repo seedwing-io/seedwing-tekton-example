@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: seedwing-eval
+spec:
+  description: >-
+    This Task evaluates a seedwing policy
+  params:
+  - name: PROJECT_PATH
+    description: The project within the repository
+    default: "."
+  - name: SEEDWING_IMAGE
+    description: The seedwing image
+    default: ghcr.io/seedwing-io/swio:0.1.0-nightly.b1769553
+  workspaces:
+  - name: source
+  - name: policies
+    optional: true
+    mountPath: /policies
+  steps:
+  - name: verify
+    workingDir: $(workspaces.source.path)/$(params.PROJECT_PATH)
+    image: $(params.SEEDWING_IMAGE)
+    command: ["/swio"]
+    args: ["eval", "-p /policies"]

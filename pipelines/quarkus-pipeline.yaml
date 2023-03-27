@@ -25,7 +25,11 @@ spec:
     - description: Image to build
       name: IMAGE
       type: string
+    - name: SEEDWING_IMAGE
+      description: The seedwing image
+      default: ghcr.io/seedwing-io/swio:0.1.0-nightly.38acce4f
   tasks:
+    # Clone the repository
     - name: fetch-repository
       params:
         - name: url
@@ -39,7 +43,8 @@ spec:
         name: git-clone
       workspaces:
         - name: output
-          workspace: build
+          workspace: source
+    # Build the quarkus application
     - name: quarkus-build
       params:
         - name: PROJECT_PATH
@@ -53,7 +58,8 @@ spec:
         name: quarkus-build
       workspaces:
         - name: build
-          workspace: build
+          workspace: source
+    # Build the container image and add build attestations
     - name: kaniko-build
       params:
         - name: IMAGE
@@ -69,10 +75,25 @@ spec:
         name: kaniko-chains
       workspaces:
         - name: source
-          workspace: build
+          workspace: source
         - name: dockerconfig
           workspace: dockerconfig
 
+    # Verify that build attestations and company policies are approved
+    - name: seedwing
+      params:
+        - name: SEEDWING_IMAGE
+          value: $(params.SEEDWING_IMAGE)
+        - name: PROJECT_PATH
+          value: $(params.PROJECT_PATH)
+      runAfter:
+        - kaniko-build
+      taskRef:
+        kind: Task
+        name: seedwing-eval
+      workspaces:
+        - name: source
+          workspace: source
   workspaces:
-    - name: build
+    - name: source
     - name: dockerconfig
