@@ -11,7 +11,7 @@ spec:
     default: "."
   - name: SEEDWING_IMAGE
     description: The seedwing image
-    default: ghcr.io/seedwing-io/swio:0.1.0-nightly.b1769553
+    default: ghcr.io/seedwing-io/swio:0.1.0-nightly.38acce4f
   workspaces:
   - name: source
   - name: policies
@@ -22,4 +22,4 @@ spec:
     workingDir: $(workspaces.source.path)/$(params.PROJECT_PATH)
     image: $(params.SEEDWING_IMAGE)
     command: ["/swio"]
-    args: ["eval", "-p /policies"]
+    args: ["eval"]
