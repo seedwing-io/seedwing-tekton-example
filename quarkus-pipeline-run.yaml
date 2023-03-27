@@ -10,8 +10,6 @@ spec:
       value: main 
     - name: DOCKERFILE
       value: src/main/docker/Dockerfile.jvm
-    - name: BUILDER_IMAGE
-      value: gcr.io/cloud-builders/mvn@sha256:57523fc43394d6d9d2414ee8d1c85ed7a13460cbb268c3cd16d28cfb3859e641
     - name: IMAGE
       value: 192.168.1.2:5001/seedwing-java-example:latest
   pipelineRef:

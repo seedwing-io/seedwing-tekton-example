@@ -35,12 +35,6 @@ kubectl patch configmap chains-config -n tekton-chains -p='{"data":{"transparenc
 kubectl delete po -n tekton-chains -l app=tekton-chains-controller
 ```
 
-## Configure Kaniko build task
-
-``` 4d
-kubectl apply -f https://raw.githubusercontent.com/tektoncd/chains/main/examples/kaniko/kaniko.yaml
-```
-
 ## Setup registry
 
 You can use an existing OCI registry, or use a local one using `podman`.
