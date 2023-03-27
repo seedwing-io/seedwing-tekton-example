@@ -1,0 +1,6 @@
+name: seedwing-tekton
+title: Seedwing and Tekton
+version: master # "master" is a special identifier for Antora
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/nav.adoc
