@@ -1,1 +1,1 @@
-pattern valid-signature = true
+pattern valid-signature = string

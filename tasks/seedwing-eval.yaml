@@ -24,7 +24,6 @@ spec:
 #    command: ["/swio"]
 #    args: ["eval"]
   - name: verify-image
-    workingDir: $(workspaces.source.path)/$(params.PROJECT_PATH)
     image: $(params.SEEDWING_IMAGE)
     command: ["bash"]
-    args: ["-c", "echo -n $(params.IMAGE) | /swio eval -p $(workspaces.policies.path) -n container::valid-signature"]
+    args: ["-c", "echo '\"$(params.IMAGE)\"' | /swio eval -p $(workspaces.policies.path) -n container::valid-signature"]
