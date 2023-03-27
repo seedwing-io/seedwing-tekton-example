@@ -12,14 +12,19 @@ spec:
   - name: SEEDWING_IMAGE
     description: The seedwing image
     default: ghcr.io/seedwing-io/swio:0.1.0-nightly.38acce4f
+  - name: IMAGE
+    description: The resulting image
   workspaces:
   - name: source
   - name: policies
-    optional: true
-    mountPath: /policies
   steps:
-  - name: verify
+#  - name: verify-project
+#    workingDir: $(workspaces.source.path)/$(params.PROJECT_PATH)
+#    image: $(params.SEEDWING_IMAGE)
+#    command: ["/swio"]
+#    args: ["eval"]
+  - name: verify-image
     workingDir: $(workspaces.source.path)/$(params.PROJECT_PATH)
     image: $(params.SEEDWING_IMAGE)
-    command: ["/swio"]
-    args: ["eval"]
+    command: ["bash"]
+    args: ["-c", "echo -n $(params.IMAGE) | /swio eval -p $(workspaces.policies.path) -n container::valid-signature"]

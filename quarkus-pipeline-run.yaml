@@ -25,6 +25,9 @@ spec:
     - name: dockerconfig
       secret:
         secretName: registry-credentials
+    - name: policies
+      configMap:
+        name: tekton-policies
     - name: source
       volumeClaimTemplate:
         spec:

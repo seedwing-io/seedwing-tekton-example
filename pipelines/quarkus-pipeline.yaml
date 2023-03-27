@@ -82,6 +82,8 @@ spec:
     # Verify that build attestations and company policies are approved
     - name: seedwing
       params:
+        - name: IMAGE
+          value: $(params.IMAGE)
         - name: SEEDWING_IMAGE
           value: $(params.SEEDWING_IMAGE)
         - name: PROJECT_PATH
@@ -94,6 +96,9 @@ spec:
       workspaces:
         - name: source
           workspace: source
+        - name: policies
+          workspace: policies
   workspaces:
     - name: source
     - name: dockerconfig
+    - name: policies
